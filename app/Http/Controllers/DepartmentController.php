@@ -10,7 +10,7 @@ class DepartmentController extends Controller
     public function index()
     {
         $departments = Department::all();
-     
+
         return view('management.departments.index', compact('departments'));
     }
 
@@ -27,6 +27,22 @@ class DepartmentController extends Controller
             'name' => $request->name,
 
         ]);
+        return redirect()->route('departmentsIndex');
+    }
+    public function edit($id)
+    {
+        $department = Department::find($id);
+        //return $department;
+        return view('management.departments.edit', compact('department'));
+    }
+
+    public function update(Request $request, $id)
+    {
+        Department::where('id', $id)->update([
+            'director_id' => $request->director_id,
+            'name' => $request->name,
+        ]);
+
         return redirect()->route('departmentsIndex');
     }
 }
