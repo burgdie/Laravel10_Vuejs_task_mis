@@ -8,6 +8,21 @@ use Session;
 
 class DepartmentController extends Controller
 {
+    //below Code is related to Vue JS CRUD
+
+    public function storeDepartment(Request $request)
+    {
+        Department::create([
+            'user_id' => 1,
+            'director_id' => $request->director_id,
+            'name' => $request->name,
+
+        ]);
+
+        return response()->json('success');
+    }
+
+    //below code is related to Laravel CRUD
     public function index()
     {
         $departments = Department::all();

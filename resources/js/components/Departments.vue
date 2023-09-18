@@ -23,13 +23,13 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" v-model="name">
+                        <input type="text" class="form-control" name="name" v-model="departmentData.name">
                       </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="director_id">Director</label>
-                            <select name="director_id" id="" class="form-control" v-model="director_id">
+                            <select name="director_id" id="" class="form-control" v-model="departmentData.director_id">
                                 <option value="" >Select a person</option>
                                 <option value="1">IT Director</option>
                                 <option value="2">HR Director</option>
@@ -41,7 +41,7 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" class="btn btn-success">Save changes</button>
+                  <button type="button" @click="storeDepartment" class="btn btn-success">Store</button>
                 </div>
                
               </div>
@@ -56,19 +56,31 @@
   export default{
     data() {
       return {
-        name: '',
-        director_id: '',
+        departmentData: {
+          name: '',
+          director_id: '',
+        }
+       
       }
     },
     methods: {
       createDepartment() {
+        this.departmentData.name = this.departmentData.director_id = '';
         $('#exampleModal').modal('show')
+      },
+
+      storeDepartment(){
+
+        // console.log(this.departmentData)
+        axios.post(window.url + 'api/storeDepartment', this.departmentData)
+          .then((response)=> {
+            $('#exampleModal').modal('hide')
+          })
+
       }
     },
     mounted() {
-      for(let i= 0; i < 7; i++) {
-        console.log(`The count is ${i}`);
-      }
+      
 
     },
 
