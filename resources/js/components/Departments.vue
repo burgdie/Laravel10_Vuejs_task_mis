@@ -60,7 +60,13 @@
       createDepartment() {
         $('#exampleModal').modal('show')
       }
-    }
+    },
+    mounted() {
+      for(let i= 0; i < 7; i++) {
+        console.log(`The count is ${i}`);
+      }
+
+    },
 
   }
 
