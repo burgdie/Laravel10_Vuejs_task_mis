@@ -5,9 +5,30 @@
         <div class="card-header bg-dark">
           <h5 class="float-start text-light">Departments List</h5>
           <button class="btn btn-success float-end" @click="createDepartment">New Department</button>
-
         </div>
+
         <div class="card-body">
+          <div class="table-responsive">
+            <table class="table table-hover text-center">
+              <thead>
+                <tr>
+                  <th>#</th>
+                  <th>Name</th>
+                  <th>Director</th>
+                  <th>Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr v-for="(department, index) in departments" 
+                  :key="index">
+                  <td>{{ index + 1 }}</td>
+                  <td>{{ department.name }}</td>
+                  <td>{{ department.director_id }}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
       
           <!-- Modal -->
           <div class="modal fade" id="exampleModal" tabindex="-1"     aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -56,6 +77,7 @@
   export default{
     data() {
       return {
+        departments:{},
         departmentData: {
           name: '',
           director_id: '',
@@ -64,6 +86,14 @@
       }
     },
     methods: {
+      getDepartments() {
+        axios.get(`${window.url}api/getDepartments`)
+        .then((response) => {
+           console.log(response.data)
+           this.departments =response.data;
+        });
+      },
+
       createDepartment() {
         this.departmentData.name = this.departmentData.director_id = '';
         $('#exampleModal').modal('show')
@@ -80,7 +110,11 @@
       }
     },
     mounted() {
-      
+      // for(let i =0; i < 10; i++){
+      //   console.log (`The count is ${i}`)
+      // }
+
+     this.getDepartments()
 
     },
 

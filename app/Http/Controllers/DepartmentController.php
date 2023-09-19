@@ -10,6 +10,12 @@ class DepartmentController extends Controller
 {
     //below Code is related to Vue JS CRUD
 
+    public function getDepartments()
+    {
+        return response()->json(Department::latest()->get());
+
+    }
+
     public function storeDepartment(Request $request)
     {
         Department::create([
