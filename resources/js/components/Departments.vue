@@ -24,7 +24,11 @@
                   <td>{{ index + 1 }}</td>
                   <td>{{ department.name }}</td>
                   <td>{{ department.director_id }}</td>
-                  <td></td>
+                  <td>
+                    <button class="btn btn-success" @click="editDepartment(department)">
+                      <i class="fa fa-edit"></i>
+                    </button>
+                  </td>
                 </tr>
               </tbody>
             </table>
@@ -35,7 +39,9 @@
             <div class="modal-dialog modal-dialog-centered">
               <div class="modal-content">
                 <div class="modal-header">
-                  <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+                  <h5 class="modal-title fs-5" id="exampleModalLabel">
+                    {{ !editMode ? 'Create Department' : 'Update Department'}}
+                  </h5>
                   <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
@@ -62,7 +68,9 @@
                 </div>
                 <div class="modal-footer">
                   <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                  <button type="button" @click="storeDepartment" class="btn btn-success">Store</button>
+                  <button type="button" @click="!editMode ? storeDepartment() : updateDepartment()" class="btn btn-success">
+                    {{ !editMode ? 'Store' : 'Save Changes'}}
+                  </button>
                 </div>
                
               </div>
@@ -77,8 +85,10 @@
   export default{
     data() {
       return {
+        editMode: false,
         departments:{},
         departmentData: {
+          id: '',
           name: '',
           director_id: '',
         }
@@ -89,12 +99,13 @@
       getDepartments() {
         axios.get(`${window.url}api/getDepartments`)
         .then((response) => {
-           console.log(response.data)
+           console.log('update')
            this.departments =response.data;
         });
       },
 
       createDepartment() {
+        this.editMode = false;
         this.departmentData.name = this.departmentData.director_id = '';
         $('#exampleModal').modal('show')
       },
@@ -104,10 +115,29 @@
         // console.log(this.departmentData)
         axios.post(window.url + 'api/storeDepartment', this.departmentData)
           .then((response)=> {
+            this.getDepartments()
+            $('#exampleModal').modal('hide')
+          })
+
+      },
+      editDepartment(department) {
+       this.editMode = true; 
+       this.departmentData.id = department.id;
+       this.departmentData.name = department.name;
+       this.departmentData.director_id = department.director_id
+       $('#exampleModal').modal('show')
+      },
+
+      updateDepartment() {
+        axios.post(window.url + 'api/updateDepartment/' + this.departmentData.id, this.departmentData)
+          .then((response)=> {
+            this.getDepartments()
             $('#exampleModal').modal('hide')
           })
 
       }
+
+
     },
     mounted() {
       // for(let i =0; i < 10; i++){
