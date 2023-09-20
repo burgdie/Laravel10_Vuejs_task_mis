@@ -56,10 +56,12 @@
                         <label for="name">Name</label>
                         <input type="text" class="form-control" name="name" id="name" v-model="departmentData.name">
                         <!-- Validation -->
-                        <p class="text-danger"
+                         <!-- <p class="text-danger"
                           v-if="departmentErrors.name">
                           Name is required
-                        </p>
+                        </p> -->
+
+                        <div class="text-danger" v-if="departmentData.errors.has('name')" v-html="departmentData.errors.get('name')" />
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -71,10 +73,11 @@
                                 <option value="2">HR Director</option>
 
                             </select>
-                            <p class="text-danger"
+                            <!-- <p class="text-danger"
                               v-if="departmentErrors.director_id">
                               Director is required
-                            </p>
+                            </p> -->
+                            <div class="text-danger" v-if="departmentData.errors.has('director_id')" v-html="departmentData.errors.get('director_id')" />
                         </div>
                     </div>
                   </div>
@@ -100,11 +103,11 @@
       return {
         editMode: false,
         departments:{},
-        departmentData: {
+        departmentData: new Form ({
           id: '',
           name: '',
           director_id: '',
-        },
+        }),
         departmentErrors: {
           name: false,
           director_id: false,
@@ -127,19 +130,19 @@
       },
 
       storeDepartment(){
-        this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false
-        this.departmentData.director_id == '' ? this.departmentErrors.director_id = true 
-          : this.departmentErrors.director_id = false
+        // this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false
+        // this.departmentData.director_id == '' ? this.departmentErrors.director_id = true 
+        //   : this.departmentErrors.director_id = false
           
         
-        if(this.departmentData.name && this.departmentData.director_id) {
-          axios.post(window.url + 'api/storeDepartment', this.departmentData)
+       // if(this.departmentData.name && this.departmentData.director_id) {
+          this.departmentData.post(window.url + 'api/storeDepartment')
             .then((response) => {
               this.getDepartments()
               $('#exampleModal').modal('hide')
             });
          
-        }
+       // }
 
         
 
@@ -153,18 +156,18 @@
       },
 
       updateDepartment() {
-        this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false
-        this.departmentData.director_id == '' ? this.departmentErrors.director_id = true 
-          : this.departmentErrors.director_id = false
+        // this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false
+        // this.departmentData.director_id == '' ? this.departmentErrors.director_id = true 
+        //   : this.departmentErrors.director_id = false
           
         
-        if(this.departmentData.name && this.departmentData.director_id) {
-          axios.post(window.url + 'api/updateDepartment/' + this.departmentData.id, this.departmentData)
+       // if(this.departmentData.name && this.departmentData.director_id) {
+          this.departmentData.post(window.url + 'api/updateDepartment/' + this.departmentData.id)
           .then((response)=> {
             this.getDepartments()
             $('#exampleModal').modal('hide')
           });
-        }
+      // }
 
 
 
