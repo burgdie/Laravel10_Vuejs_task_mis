@@ -55,6 +55,11 @@
                       <div class="form-group">
                         <label for="name">Name</label>
                         <input type="text" class="form-control" name="name" id="name" v-model="departmentData.name">
+                        <!-- Validation -->
+                        <p class="text-danger"
+                          v-if="departmentErrors.name">
+                          Name is required
+                        </p>
                       </div>
                     </div>
                     <div class="col-md-6">
@@ -66,6 +71,10 @@
                                 <option value="2">HR Director</option>
 
                             </select>
+                            <p class="text-danger"
+                              v-if="departmentErrors.director_id">
+                              Director is required
+                            </p>
                         </div>
                     </div>
                   </div>
@@ -95,7 +104,11 @@
           id: '',
           name: '',
           director_id: '',
-        }
+        },
+        departmentErrors: {
+          name: false,
+          director_id: false,
+        },
        
       }
     },
@@ -114,13 +127,21 @@
       },
 
       storeDepartment(){
+        this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false
+        this.departmentData.director_id == '' ? this.departmentErrors.director_id = true 
+          : this.departmentErrors.director_id = false
+          
+        
+        if(this.departmentData.name && this.departmentData.director_id) {
+          axios.post(window.url + 'api/storeDepartment', this.departmentData)
+            .then((response) => {
+              this.getDepartments()
+              $('#exampleModal').modal('hide')
+            });
+         
+        }
 
-        // console.log(this.departmentData)
-        axios.post(window.url + 'api/storeDepartment', this.departmentData)
-          .then((response)=> {
-            this.getDepartments()
-            $('#exampleModal').modal('hide')
-          })
+        
 
       },
       editDepartment(department) {
@@ -132,11 +153,22 @@
       },
 
       updateDepartment() {
-        axios.post(window.url + 'api/updateDepartment/' + this.departmentData.id, this.departmentData)
+        this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false
+        this.departmentData.director_id == '' ? this.departmentErrors.director_id = true 
+          : this.departmentErrors.director_id = false
+          
+        
+        if(this.departmentData.name && this.departmentData.director_id) {
+          axios.post(window.url + 'api/updateDepartment/' + this.departmentData.id, this.departmentData)
           .then((response)=> {
             this.getDepartments()
             $('#exampleModal').modal('hide')
-          })
+          });
+        }
+
+
+
+      
 
       },
 
