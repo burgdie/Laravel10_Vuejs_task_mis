@@ -39,6 +39,12 @@ class DepartmentController extends Controller
         return response()->json('success');
     }
 
+    public function deleteDepartment($id)
+    {
+        Department::where('id', $id)->delete();
+        return response()->json('success');
+    }
+
     //below code is related to Laravel CRUD
     public function index()
     {

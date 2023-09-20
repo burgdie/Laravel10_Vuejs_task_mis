@@ -25,9 +25,13 @@
                   <td>{{ department.name }}</td>
                   <td>{{ department.director_id }}</td>
                   <td>
-                    <button class="btn btn-success" @click="editDepartment(department)">
+                    <button class="btn btn-success mx-1" @click="editDepartment(department)">
                       <i class="fa fa-edit"></i>
                     </button>
+                    <button class="btn btn-danger mx-1" @click="deleteDepartment(department)">
+                      <i class="fa fa-trash"></i>
+                    </button>
+                   
                   </td>
                 </tr>
               </tbody>
@@ -50,13 +54,13 @@
                     <div class="col-md-6">
                       <div class="form-group">
                         <label for="name">Name</label>
-                        <input type="text" class="form-control" name="name" v-model="departmentData.name">
+                        <input type="text" class="form-control" name="name" id="name" v-model="departmentData.name">
                       </div>
                     </div>
                     <div class="col-md-6">
                         <div class="form-group">
                             <label for="director_id">Director</label>
-                            <select name="director_id" id="" class="form-control" v-model="departmentData.director_id">
+                            <select name="director_id" id="director_id" class="form-control" v-model="departmentData.director_id">
                                 <option value="" >Select a person</option>
                                 <option value="1">IT Director</option>
                                 <option value="2">HR Director</option>
@@ -99,7 +103,6 @@
       getDepartments() {
         axios.get(`${window.url}api/getDepartments`)
         .then((response) => {
-           console.log('update')
            this.departments =response.data;
         });
       },
@@ -134,6 +137,18 @@
             this.getDepartments()
             $('#exampleModal').modal('hide')
           })
+
+      },
+
+      deleteDepartment(department) {
+        console.log('deleteDeaprtment called');
+        if(confirm('Are you sure you want to delete department')){
+          axios.post(window.url + 'api/deleteDepartment/' + department.id)
+          .then(()=> {
+            this.getDepartments()
+          })
+        
+        }
 
       }
 
