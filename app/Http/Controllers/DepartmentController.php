@@ -8,6 +8,7 @@ use Session;
 
 class DepartmentController extends Controller
 {
+
     //below Code is related to Vue JS CRUD
 
     public function getDepartments()
