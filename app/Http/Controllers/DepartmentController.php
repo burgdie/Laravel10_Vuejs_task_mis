@@ -9,10 +9,16 @@ use Session;
 class DepartmentController extends Controller
 {
 
+    // public function __construct()
+    // {
+    //     $this->middleware('auth:api');
+    // }
+
     //below Code is related to Vue JS CRUD
 
     public function getDepartments()
     {
+        // $this->middleware('auth:api');
         return response()->json(Department::latest()->get());
 
     }

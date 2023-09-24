@@ -18,7 +18,8 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
-Route::get('getDepartments', [DepartmentController::class, 'getDepartments']);
+Route::get('getDepartments', [DepartmentController::class, 'getDepartments'])
+    ->middleware('auth:api');
 Route::post('storeDepartment', [DepartmentController::class, 'storeDepartment']);
 Route::post('updateDepartment/{id}', [DepartmentController::class, 'updateDepartment']);
 Route::post('deleteDepartment/{id}', [DepartmentController::class, 'deleteDepartment']);
