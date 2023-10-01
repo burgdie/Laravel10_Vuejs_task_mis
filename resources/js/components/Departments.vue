@@ -8,6 +8,9 @@
         </div>
 
         <div class="card-body">
+        <button @click="testAction" class="btn btn-info">Test</button>
+          {{ test }}
+
           <div class="table-responsive">
             <table class="table table-hover text-center">
               <thead>
@@ -185,6 +188,9 @@
         
         }
 
+      },
+      testAction(){
+        this.$store.dispatch('testAction')
       }
 
 
@@ -195,8 +201,12 @@
       // }
 
      this.getDepartments()
-
     },
+    computed: {
+      test() {
+        return this.$store.getters.test
+      }
+    }
 
   }
 

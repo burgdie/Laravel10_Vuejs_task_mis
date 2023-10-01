@@ -5,7 +5,22 @@ export const store = createStore({
   state: {
     test: 0,
   },
-  getters:{},
-  mutations:{},
-  actions: {}
+  getters:{
+    test(state) {
+      return state.test
+    }
+  },
+  mutations:{
+    testMutation: (state) => {
+      // console.log('mutation commited');
+      state.test++;
+      console.log(state.test);
+    }
+  },
+  actions: {
+    testAction: (context) => {
+      //console.log('action dispatched');
+      context.commit('testMutation')
+    }
+  }
 });
