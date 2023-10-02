@@ -8,8 +8,8 @@
         </div>
 
         <div class="card-body">
-        <button @click="testAction" class="btn btn-info">Test</button>
-          {{ test }}
+        <!-- <button @click="testAction" class="btn btn-info">Test</button>
+          {{ test }} -->
 
           <div class="table-responsive">
             <table class="table table-hover text-center">
@@ -105,7 +105,6 @@
     data() {
       return {
         editMode: false,
-        departments:{},
         departmentData: new Form ({
           id: '',
           name: '',
@@ -150,11 +149,7 @@
         //   : this.departmentErrors.director_id = false
          
        // if(this.departmentData.name && this.departmentData.director_id) {
-          this.departmentData.post(window.url + 'api/updateDepartment/' + this.departmentData.id)
-          .then((response)=> {
-            this.getDepartments()
-            $('#exampleModal').modal('hide')
-          });
+          this.$store.dispatch('updateDepartment', this.departmentData)
       // }
      },
 

@@ -28,8 +28,16 @@ export default {
       departmentData.post(window.url + 'api/storeDepartment')
             .then((response) => {
               //this.getDepartments()
+              context.dispatch('getDepartments')
               $('#exampleModal').modal('hide')
             });
+    },
+    updateDepartment: (context, departmentData) => {
+      departmentData.post(window.url + 'api/updateDepartment/' + departmentData.id)
+      .then((response)=> {
+        context.dispatch('getDepartments')
+        $('#exampleModal').modal('hide')
+      });
     }
 
   },
