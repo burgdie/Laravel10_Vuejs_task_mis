@@ -38,6 +38,18 @@ export default {
         context.dispatch('getDepartments')
         $('#exampleModal').modal('hide')
       });
+    },
+    deleteDepartment: (context,departmentData) => {
+      
+      if(confirm('Are you sure you want to delete department')){
+        axios.post(window.url + 'api/deleteDepartment/' + departmentData.id)
+        .then(()=> {
+          // this.getDepartments()
+          context.dispatch('getDepartments')
+        })
+      
+      }
+
     }
 
   },

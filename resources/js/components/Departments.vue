@@ -154,22 +154,13 @@
      },
 
       deleteDepartment(department) {
-        console.log('deleteDeaprtment called');
-        if(confirm('Are you sure you want to delete department')){
-          axios.post(window.url + 'api/deleteDepartment/' + department.id)
-          .then(()=> {
-            this.getDepartments()
-          })
-        
-        }
-
+        this.$store.dispatch('deleteDepartment', department)
       },
-      testAction(){
-        this.$store.dispatch('testAction')
-      }
-
-
+      // testAction(){
+      //   this.$store.dispatch('testAction')
+      // }
     },
+    
     mounted() {
       // this.getDepartments()
       this.$store.dispatch('getDepartments')
