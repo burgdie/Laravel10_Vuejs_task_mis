@@ -119,13 +119,7 @@
       }
     },
     methods: {
-      getDepartments() {
-        axios.get(`${window.url}api/getDepartments`)
-        .then((response) => {
-           this.departments =response.data;
-        });
-      },
-
+          
       createDepartment() {
         this.editMode = false;
         this.departmentData.name = this.departmentData.director_id = '';
@@ -182,11 +176,15 @@
 
     },
     mounted() {
-      this.getDepartments()
+      // this.getDepartments()
+      this.$store.dispatch('getDepartments')
     },
     computed: {
-      test() {
-        return this.$store.getters.test
+      // test() {
+      //   return this.$store.getters.test
+      // }
+      departments() {
+        return this.$store.getters.departments
       }
     }
 
