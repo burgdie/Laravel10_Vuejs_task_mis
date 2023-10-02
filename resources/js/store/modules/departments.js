@@ -6,5 +6,14 @@ export default {
   },
   getters: {},
   mutations: {},
-  actions: {},
+  actions: {
+    storeDepartment: (context, departmentData) => {
+      departmentData.post(window.url + 'api/storeDepartment')
+            .then((response) => {
+              //this.getDepartments()
+              $('#exampleModal').modal('hide')
+            });
+    }
+
+  },
 }

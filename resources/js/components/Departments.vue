@@ -136,20 +136,12 @@
         // this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false
         // this.departmentData.director_id == '' ? this.departmentErrors.director_id = true 
         //   : this.departmentErrors.director_id = false
-          
-        
-       // if(this.departmentData.name && this.departmentData.director_id) {
-          this.departmentData.post(window.url + 'api/storeDepartment')
-            .then((response) => {
-              this.getDepartments()
-              $('#exampleModal').modal('hide')
-            });
+        // if(this.departmentData.name && this.departmentData.director_id) {
+          this.$store.dispatch('storeDepartment', this.departmentData)
          
        // }
-
-        
-
       },
+
       editDepartment(department) {
        this.editMode = true; 
        this.departmentData.id = department.id;
@@ -162,8 +154,7 @@
         // this.departmentData.name == '' ? this.departmentErrors.name = true : this.departmentErrors.name = false
         // this.departmentData.director_id == '' ? this.departmentErrors.director_id = true 
         //   : this.departmentErrors.director_id = false
-          
-        
+         
        // if(this.departmentData.name && this.departmentData.director_id) {
           this.departmentData.post(window.url + 'api/updateDepartment/' + this.departmentData.id)
           .then((response)=> {
@@ -171,12 +162,7 @@
             $('#exampleModal').modal('hide')
           });
       // }
-
-
-
-      
-
-      },
+     },
 
       deleteDepartment(department) {
         console.log('deleteDeaprtment called');
@@ -196,11 +182,7 @@
 
     },
     mounted() {
-      // for(let i =0; i < 10; i++){
-      //   console.log (`The count is ${i}`)
-      // }
-
-     this.getDepartments()
+      this.getDepartments()
     },
     computed: {
       test() {
