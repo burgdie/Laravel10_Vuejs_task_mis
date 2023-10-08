@@ -24,26 +24,36 @@
                     <img class="img logo mb-5" src="{{ asset('public/images/task_logo.png') }}" alt="Logo">
                 </a>
                 <ul class="list-unstyled components mb-5">
-                    <li class="active">
-                        <a href="#homeSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false"
-                            aria-controls="homeSubMenu">
-                            Management <i class="fa fa-angle-down float-end mt-2"></i>
-                        </a>
-                        <ul class="collapse list-unstyled" id="homeSubmenu">
-                            <li>
-                                <a href="{{ route('departmentsIndex') }}">Departments</a>
-                            </li>
-                            <li>
-                                <a href="{{ route('usersIndex') }}">Users</a>
-                            </li>
-                            <li>
-                                <a href="#">Roles</a>
-                            </li>
-                            <li>
-                                <a href="#">Permissions</a>
-                            </li>
-                        </ul>
-                    </li>
+                    @can('admin')
+                        <li class="active">
+                            <a href="#homeSubmenu" data-bs-toggle="collapse" role="button" aria-expanded="false"
+                                aria-controls="homeSubMenu">
+                                Management <i class="fa fa-angle-down float-end mt-2"></i>
+                            </a>
+                            <ul class="collapse list-unstyled" id="homeSubmenu">
+                                @can('departments-read')
+                                    <li>
+                                        <a href="{{ route('departmentsIndex') }}">Departments</a>
+                                    </li>
+                                @endcan
+                                @can('users-read')
+                                    <li>
+                                        <a href="{{ route('usersIndex') }}">Users</a>
+                                    </li>
+                                @endcan
+                                @can('roles-read')
+                                    <li>
+                                        <a href="#">Roles</a>
+                                    </li>
+                                @endcan
+                                @can('permissions-read')
+                                    <li>
+                                        <a href="#">Permissions</a>
+                                    </li>
+                                @endcan
+                            </ul>
+                        </li>
+                    @endcan
                     <li>
                         <a href="#">Tasks Inbox</a>
                     </li>
@@ -120,6 +130,13 @@
             @yield('content')
         </div>
     </div>
+    @auth
+        <script>
+            window.auth_roles = {!! json_encode(auth()->user()->roles) !!}
+            window.auth_permissions = {!! json_encode(auth()->user()->permissions) !!}
+        </script>
+    @endauth
+
 
     <script src="{{ asset('public/js/app.js') }}"></script>
     <script src="{{ asset('public/sidebar/js/main.js') }}"></script>
